@@ -1,0 +1,10 @@
+INSERT INTO diagnosis_dim (
+	DIAG_01
+) (
+	SELECT DISTINCT
+		DIAG_01
+	FROM HES_APC
+);
+
+
+
