@@ -5,4 +5,4 @@ CREATE TABLE geography_dim (
 	,HOMEADD NVARCHAR(8) 
 	--,city NVARCHAR(15)
 	--,district NVARCHAR(15)
-)
+);
