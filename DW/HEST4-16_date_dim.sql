@@ -18,3 +18,5 @@ INSERT INTO date_dim (
 
 
 SELECT * FROM date_dim
+
+--DROP TABLE date_dim
