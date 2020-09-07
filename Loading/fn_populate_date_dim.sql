@@ -38,3 +38,4 @@ GO
 
 SELECT * FROM func_populate_date_dim('2020-01-01', '2020-01-07')
 OPTION (MAXRECURSION 0)
+
