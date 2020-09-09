@@ -12,7 +12,7 @@ CREATE TABLE patient_dim (
 );
 GO
 
-INSERT INTO patient_dim ( 
+INSERT INTO patient_dim WITH(TABLOCK) ( 
 	HESID 
 	,SEX 
 	,ETHNOS 

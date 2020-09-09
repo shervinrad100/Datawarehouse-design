@@ -1,4 +1,4 @@
-INSERT INTO administrative_dim (
+INSERT INTO administrative_dim WITH(TABLOCK) (
 	ADMINCAT
 	,ADMINCATST
 	,CATEGORY
@@ -12,7 +12,7 @@ INSERT INTO administrative_dim (
 
 --ALTER TABLE HES_APC ADD ADMINID INT
 
-UPDATE src SET
+UPDATE src WITH(TABLOCK) SET
 	src.ADMINID = dim.ADMINID
 FROM administrative_dim AS dim
 JOIN HES_APC AS src

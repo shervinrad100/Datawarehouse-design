@@ -1,4 +1,4 @@
-INSERT INTO diagnosis_dim (
+INSERT INTO diagnosis_dim WITH(TABLOCK) (
 	DIAG_01
 ) (
 	SELECT DISTINCT
@@ -9,7 +9,7 @@ INSERT INTO diagnosis_dim (
 
 --ALTER TABLE HES_APC ADD DIAGNOSISID INT
 
-UPDATE src SET
+UPDATE src WITH(TABLOCK) SET
 	src.DIAGNOSISID = dim.DIAGNOSISID
 FROM diagnosis_dim AS dim
 JOIN HES_APC AS src

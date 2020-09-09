@@ -1,5 +1,5 @@
 
-INSERT INTO admission_dim(
+INSERT INTO admission_dim WITH(TABLOCK) (
 	ADMIAGE
 	,ADMIMETH
 	,ADMISORC
@@ -19,7 +19,7 @@ INSERT INTO admission_dim(
 
 
 BEGIN TRAN 
-UPDATE src SET
+UPDATE src WITH(TABLOCK) SET
 	 src.ADMISID  = dim.ADMISID
 FROM HES_APC AS src
 JOIN admission_dim AS dim 

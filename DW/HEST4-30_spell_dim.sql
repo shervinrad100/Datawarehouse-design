@@ -4,7 +4,7 @@ ALTER TABLE spell_dim
 GO
 
 
-INSERT INTO spell_dim (
+INSERT INTO spell_dim  WITH(TABLOCK) (
 	SPELL
 	,SPELLBGIN
 	,SPELLEND

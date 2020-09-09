@@ -7,7 +7,7 @@ CREATE TABLE date_dim (
 );
 
 -- initialise table 
-INSERT INTO date_dim (
+INSERT INTO date_dim WITH(TABLOCK) (
 	[DATE]		
 	,SEASON		
 	,MONTHOFYR	

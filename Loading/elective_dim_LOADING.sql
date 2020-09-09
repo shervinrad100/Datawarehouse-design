@@ -1,4 +1,4 @@
-INSERT INTO elective_dim (
+INSERT INTO elective_dim WITH(TABLOCK) (
 	ELECDUR
 	,ELECDUR_CALC
 ) (
@@ -10,7 +10,7 @@ INSERT INTO elective_dim (
 
 --ALTER TABLE HES_APC ADD ELECTIVEID INT
 
-UPDATE src SET
+UPDATE src WITH(TABLOCK) SET
 	src.ELECTIVEID = dim.ELECTIVEID
 FROM HES_APC AS src
 JOIN elective_dim AS dim 
