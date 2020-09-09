@@ -8,7 +8,7 @@
 
 
 
--- ENABLING CDC
+-- ENABLING CDC    <<--------- 
 USE HESTeam4
 GO
 EXEC sys.sp_cdc_enable_db; --admin priv needed
@@ -23,7 +23,7 @@ EXEC sys.sp_cdc_enable_table
 	,@supports_net_changes = 1 ; -- keep track of all individual changes that occur
 GO
 
---PULL DATA OUT OF CDC window
+--PULL DATA OUT OF CDC window (create logtable)
 DECLARE @from_date DATETIME, @to_date DATETIME
 SELECT @from_date = MAX(LastExtractTime), @to_date = getdate()
 FROM stg.ExtractLog 
