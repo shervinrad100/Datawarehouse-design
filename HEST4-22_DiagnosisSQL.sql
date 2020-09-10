@@ -12,7 +12,7 @@ insert into diagnosis_dim (
   DIAG_01
   ,Description
 ) (
-select 
+select distinct
 diagnosis_dim.DIAG_01
 ,ICD10Codes.Description
 from diagnosis_dim
