@@ -1,11 +1,23 @@
 use HESTeam4
 
-select diagnosis_dim.DIAGNOSISID,diagnosis_dim.DIAG_01,ICD10Codes.Description
+CREATE TABLE diagnosis_dim
+(
+DIAGNOSISID INT IDENTITY PRIMARY KEY,
+DIAG_01 NVARCHAR(10),
+Description TEXT
+);
+GO
+
+insert into diagnosis_dim (
+  DIAG_01
+  ,Description
+) (
+select 
+diagnosis_dim.DIAG_01
+,ICD10Codes.Description
 from diagnosis_dim
-inner join
-ICD10Codes
+inner join ICD10Codes
 on diagnosis_dim.DIAG_01=ICD10Codes.Code
-order by DIAGNOSISID
 
 --update diagnosis_dim
 --set diagnosis_dim.Description=ICD10Codes.Description
