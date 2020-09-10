@@ -1,0 +1,30 @@
+USE HESTeam4
+CREATE TABLE episode_dim
+(EPISODEID int identity primary key
+ ,EPISODE int
+ ,EPIDUR int
+ ,EPIEND date
+ ,EPISTART date
+ ,EPISTAT char(1)
+ ,EPITYPE char(1)
+ ,STARTAGE int
+ ,ENDAGE int
+ ,ACTIVAGE NVARCHAR(3)
+ ,EPIORDER INT)
+ 
+ UPDATE src WITH(TABLOCK) SET 
+	src.EPISODEID = dim.EPISODEID
+FROM HES_APC AS src
+JOIN episode_dim AS dim 
+	ON src.EPISODE   = dim.EPISODE
+	AND src.EPIDUR   = dim.EPIDUR
+	AND src.EPIEND   = dim.EPIEND
+	AND src.EPISTART = dim.EPISTART
+	AND src.EPISTAT  = dim.EPISTAT 
+	AND src.EPITYPE	 = dim.EPITYPE	
+	AND src.STARTAGE = dim.STARTAGE
+	AND src.ENDAGE 	 = dim.ENDAGE 	
+	AND src.ACTIVAGE = dim.ACTIVAGE
+	AND src.EPIORDER = dim.EPIORDER
+	
+
