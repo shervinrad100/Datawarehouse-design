@@ -1,3 +1,9 @@
+CREATE table provider_dim
+(
+PROVID INT IDENTITY PRIMARY KEY,
+PROCODE NVARCHAR(8)
+)
+
 INSERT INTO provider_dim (
 	PROCODE
 ) (
