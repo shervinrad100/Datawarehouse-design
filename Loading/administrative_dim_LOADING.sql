@@ -1,3 +1,7 @@
+Create Table administrative_dim
+(ADMINID int PRIMARY KEY, ADMINCAT nvarchar(3), ADMINCATST nvarchar(3))
+
+
 INSERT INTO administrative_dim WITH(TABLOCK) (
 	ADMINCAT
 	,ADMINCATST
