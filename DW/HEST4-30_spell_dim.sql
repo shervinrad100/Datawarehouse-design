@@ -1,6 +1,8 @@
-
-ALTER TABLE spell_dim
-	ALTER COLUMN SPELLDUR INT
+Create Table spell_dim
+(SPELLID int  identity PRIMARY KEY, 
+SPELL nvarchar(3), 
+SPELLBGIN nvarchar(3), 
+SPELLDUR INT);
 GO
 
 
