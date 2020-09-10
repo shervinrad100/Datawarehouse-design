@@ -6,8 +6,6 @@
 
 --SELECT * FROM TEST_srcTAB
 
-
-
 -- ENABLING CDC    <<--------- 
 USE HESTeam4
 GO
