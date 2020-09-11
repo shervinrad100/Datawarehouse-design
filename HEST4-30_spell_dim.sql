@@ -1,0 +1,22 @@
+Create Table spell_dim
+(SPELLID int  identity PRIMARY KEY, 
+SPELL nvarchar(3), 
+SPELLBGIN nvarchar(3), 
+SPELLDUR INT);
+GO
+
+
+INSERT INTO spell_dim  WITH(TABLOCK) (
+	SPELL
+	,SPELLBGIN
+	,SPELLEND
+	,SPELLDUR
+) (
+	SELECT DISTINCT 
+		SPELL
+		,SPELBGIN
+		,SPELEND
+		,SPELDUR
+	FROM HES_APC
+);
+GO

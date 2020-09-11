@@ -1,0 +1,41 @@
+
+CREATE OR ALTER FUNCTION func_populate_date_dim (
+	@strt DATE
+	,@end DATE
+) RETURNS TABLE AS RETURN (
+	WITH CTE AS (
+		-- anchor
+		SELECT 
+			CAST(@strt AS DATE) AS [DATE]
+			,CASE
+				WHEN DATEPART(m,@strt) IN (3,4,5) THEN 'SPR'
+				WHEN DATEPART(m,@strt) IN (6,7,8) THEN 'SMR'
+				WHEN DATEPART(m,@strt) IN (9,10,11) THEN 'ATM'
+				WHEN DATEPART(m,@strt) IN (12,1,2) THEN 'WNT'
+			END AS SEASON
+			,DATEPART(mm,@strt) AS MONTHOFYR
+			,DATEPART(yyyy,@strt) AS [YEAR]
+	
+		UNION ALL
+
+		SELECT 
+			DATEADD(dd,1,[DATE])
+			,CASE
+				WHEN DATEPART(m,DATEADD(dd,1,[DATE])) IN (3,4,5) THEN 'SPR'
+				WHEN DATEPART(m,DATEADD(dd,1,[DATE])) IN (6,7,8) THEN 'SMR'
+				WHEN DATEPART(m,DATEADD(dd,1,[DATE])) IN (9,10,11) THEN 'ATM'
+				WHEN DATEPART(m,DATEADD(dd,1,[DATE])) IN (12,1,2) THEN 'WNT'
+			END AS SEASON
+			,DATEPART(mm,DATEADD(dd,1,[DATE])) AS MONTHOFYR
+			,DATEPART(yyyy,DATEADD(dd,1,[DATE])) AS [YEAR]
+		FROM CTE
+		WHERE DATEADD(dd,1,[DATE]) <= @end
+	)  
+	SELECT * FROM CTE
+);
+GO
+
+
+SELECT * FROM func_populate_date_dim('2020-01-01', '2020-01-07')
+OPTION (MAXRECURSION 0)
+
