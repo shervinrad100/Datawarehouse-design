@@ -7,9 +7,8 @@ CREATE TABLE patient_dim (
 	,DOB DATE NOT NULL
 	,NEWNHSNO NVARCHAR(15) NULL
 	,NEWNHSNO_CHECK NVARCHAR(1) NULL
-	--,HOMEADD NVARCHAR(8) NULL
 	,LEGLCAT NVARCHAR(2) NULL
-	,GEOID INT --REFERENCES geography_dim(GEOID)
+	,GEOID INT REFERENCES geography_dim(GEOID)
 );
 GO
 
@@ -20,7 +19,6 @@ INSERT INTO patient_dim WITH(TABLOCK) (
 	,DOB 
 	,NEWNHSNO
 	,NEWNHSNO_CHECK
-	--,HOMEADD 
 	,LEGLCAT
 	,GEOID
 ) ( 
@@ -31,7 +29,6 @@ INSERT INTO patient_dim WITH(TABLOCK) (
 		,DOB 
 		,NEWNHSNO
 		,NEWNHSNO_CHECK
-		--,HOMEADD 
 		,LEGLCAT
 		,GEOID
 	FROM (
@@ -42,19 +39,21 @@ INSERT INTO patient_dim WITH(TABLOCK) (
 			,DOB 
 			,NEWNHSNO
 			,NEWNHSNO_CHECK
-			--,HOMEADD 
 			,LEGLCAT
 			,GEOID
 			,COUNT(HESID) OVER (PARTITION BY HESID ORDER BY (SELECT 1)) AS cnt
 		FROM HES_APC AS src
-		JOIN geography_dim AS dim
-			ON src.HOMEADD = dim.HOMEADD
 		WHERE HESID IS NOT NULL
 	) AS SubQ
 	WHERE cnt = 1 
 );
 GO
 COMMIT TRAN
+
+--ALTER TABLE patient_dim
+--	ADD FOREIGN KEY (GEOID) REFERENCES geography_dim(GEOID)
+
+
 
 
 
@@ -98,7 +97,8 @@ COMMIT TRAN
 GO
 */
 
--- duplicated HESIDs
+-- duplicated HESIDs -- 6
+
 SELECT * FROM ( 
 	SELECT DISTINCT
 		CAST(HESID AS float) AS HESID
@@ -115,7 +115,7 @@ SELECT * FROM (
 ) AS subQ
 WHERE  cnt > 1
 
--- Null HESID entries 
+-- Null HESID entries --9
 SELECT  
 	HESID
 	,SEX 
@@ -133,3 +133,5 @@ SELECT
 	,6 AS Dupes
 	,COUNT(*) AS tot_ppl 
 FROM HES_APC
+
+--SELECT * FROM patient_dim --65,061 rows
