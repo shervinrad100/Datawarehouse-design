@@ -9,6 +9,7 @@ CREATE TABLE admission_dim
  ,LOPATID nvarchar(15)
  ,CLASSPAT nvarchar(2)
  ,BEDYEAR int
+ ,ADMIDATEID INT
  )
 
 
@@ -43,3 +44,25 @@ JOIN admission_dim AS dim
 	    AND src.CLASSPAT = dim.CLASSPAT
 	    AND src.BEDYEAR  = dim.BEDYEAR
 COMMIT TRAN
+
+
+
+UPDATE admDIM SET
+	ADMIDATEID = dateDIM.DATEID	
+FROM admission_dim AS admDIM
+JOIN HES_APC AS src 
+	ON admDIM.ADMISID = src.ADMISID
+JOIN patient_dim AS patDIM
+ON src.HESID = patDIM.HESID
+	AND src.SEX = patDIM.SEX
+	AND src.ETHNOS = patDIM.ETHNOS
+	AND src.DOB = patDIM.DOB
+	AND src.NEWNHSNO = patDIM.NEWNHSNO
+	AND src.NEWNHSNO_CHECK = patDIM.NEWNHSNO_CHECK
+	AND src.LEGLCAT = patDIM.LEGLCAT
+JOIN date_dim AS dateDIM
+	ON src.ADMIDATE = dateDIM.[DATE]
+
+
+ALTER TABLE admission_dim 
+	ADD FOREIGN KEY (ADMIDATEID) REFERENCES date_dim(DATEID)
