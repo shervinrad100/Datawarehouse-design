@@ -3,8 +3,8 @@ CREATE TABLE episode_dim
 (EPISODEID int identity primary key
  ,EPISODE int
  ,EPIDUR int
- ,EPIEND date
- ,EPISTART date
+ ,EPIENDID INT
+ ,EPISTARTID INT
  ,EPISTAT char(1)
  ,EPITYPE char(1)
  ,STARTAGE int
@@ -28,3 +28,42 @@ JOIN episode_dim AS dim
 	AND src.EPIORDER = dim.EPIORDER
 	
 
+
+UPDATE epiDIM SET
+	EPISTARTID = dateDIM.DATEID
+FROM episode_dim AS epiDIM
+JOIN HES_APC AS src 
+	ON src.EPISODEID = epiDIM.EPISODEID
+JOIN patient_dim AS patDIM
+	ON src.HESID = patDIM.HESID
+	AND src.SEX = patDIM.SEX
+	AND src.ETHNOS = patDIM.ETHNOS
+	AND src.DOB = patDIM.DOB
+	AND src.NEWNHSNO = patDIM.NEWNHSNO
+	AND src.NEWNHSNO_CHECK = patDIM.NEWNHSNO_CHECK
+	AND src.LEGLCAT = patDIM.LEGLCAT
+JOIN date_dim AS dateDIM
+	ON dateDIM.[DATE] = src.EPISTART
+
+
+UPDATE epiDIM SET
+	EPIENDID = dateDIM.DATEID
+FROM episode_dim AS epiDIM
+JOIN HES_APC AS src 
+	ON src.EPISODEID = epiDIM.EPISODEID
+JOIN patient_dim AS patDIM
+	ON src.HESID = patDIM.HESID
+	AND src.SEX = patDIM.SEX
+	AND src.ETHNOS = patDIM.ETHNOS
+	AND src.DOB = patDIM.DOB
+	AND src.NEWNHSNO = patDIM.NEWNHSNO
+	AND src.NEWNHSNO_CHECK = patDIM.NEWNHSNO_CHECK
+	AND src.LEGLCAT = patDIM.LEGLCAT
+JOIN date_dim AS dateDIM
+	ON dateDIM.[DATE] = src.EPIEND
+
+ALTER TABLE episode_dim
+	ADD FOREIGN KEY (EPISTARTID) REFERENCES date_dim(DATEID)
+	
+ALTER TABLE episode_dim
+	ADD FOREIGN KEY (EPIENDID) REFERENCES date_dim(DATEID)
