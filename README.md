@@ -12,6 +12,9 @@
 6. foreign key relationships were put in place
 7. SSIS package created 
   - import new rows straight from the source instead of importing as staging table
+  - the warning packages are truncation warnings 
+  - error rows will be redirected to errorLog table 
+  - 
  
 __Do check the database diagram on SSMS (it looks really pretty)__
 
